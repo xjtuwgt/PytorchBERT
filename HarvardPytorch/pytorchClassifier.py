@@ -18,12 +18,12 @@ print(transform)
 trainset = torchvision.datasets.CIFAR10(root='./data', train=True,
                                         download=True, transform=transform)
 
-trainloader = torch.utils.data.DataLoader(trainset, batch_size=32,
+trainloader = torch.utils.data.DataLoader(trainset, batch_size=64,
                                           shuffle=True, num_workers=2)
 
 testset = torchvision.datasets.CIFAR10(root='./data', train=False,
                                        download=True, transform=transform)
-testloader = torch.utils.data.DataLoader(testset, batch_size=32,
+testloader = torch.utils.data.DataLoader(testset, batch_size=64,
                                          shuffle=False, num_workers=2)
 
 classes = ('plane', 'car', 'bird', 'cat',
@@ -78,7 +78,7 @@ criterion = nn.CrossEntropyLoss()
 optimizer = optim.SGD(net.parameters(), lr = 0.001, momentum= 0.9)
 
 
-for epoch in range(5):
+for epoch in range(10):
     running_loss = 0.0
     for i, data in enumerate(trainloader, 0):
         inputs, labels = data
@@ -91,8 +91,8 @@ for epoch in range(5):
         loss.backward()
         optimizer.step()
         running_loss += loss.item()
-        if i % 200 == 199:
+        if i % 100 == 99:
             print('[%d, %5d] loss: %.3f' %
-                  (epoch + 1, i + 1, running_loss / 200))
+                  (epoch + 1, i + 1, running_loss / 100))
             running_loss = 0.0
 print("Finished training")
