@@ -5,6 +5,10 @@ import torchvision.transforms as transforms
 import matplotlib.pyplot as plt
 import numpy as np
 
+device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
+
+print(device)
+
 transform = transforms.Compose(
     [transforms.ToTensor(),
      transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))])
@@ -69,7 +73,7 @@ class Net(nn.Module):
         return x
 
 import torch.optim as optim
-net = Net()
+net = Net().to(device)
 criterion = nn.CrossEntropyLoss()
 optimizer = optim.SGD(net.parameters(), lr = 0.001, momentum= 0.9)
 
@@ -78,6 +82,8 @@ for epoch in range(5):
     running_loss = 0.0
     for i, data in enumerate(trainloader, 0):
         inputs, labels = data
+
+        inputs, labels = inputs.to(device), labels.to(device)
         optimizer.zero_grad()
 
         outputs = net(inputs)
