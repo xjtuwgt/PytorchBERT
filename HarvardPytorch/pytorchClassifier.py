@@ -91,8 +91,8 @@ for epoch in range(5):
         loss.backward()
         optimizer.step()
         running_loss += loss.item()
-        if i % 2000 == 1999:
+        if i % 200 == 199:
             print('[%d, %5d] loss: %.3f' %
-                  (epoch + 1, i + 1, running_loss / 2000))
+                  (epoch + 1, i + 1, running_loss / 200))
             running_loss = 0.0
 print("Finished training")
